@@ -1,3 +1,4 @@
+import Container from '@/components/molecules/container';
 import Navbar from '@/components/organisms/navbar';
 import Sidebar from '@/components/organisms/sidebar';
 import { PropsWithChildren } from 'react';
@@ -8,7 +9,7 @@ function BrowseLayout({ children }: PropsWithChildren) {
       <Navbar />
       <div className="flex h-full pt-20">
         <Sidebar />
-        {children}
+        <Container>{children}</Container>
       </div>
     </>
   );
