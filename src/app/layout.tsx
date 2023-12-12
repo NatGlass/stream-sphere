@@ -1,3 +1,4 @@
+import ThemeProvider from '@/components/theme/ThemeProvider';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
@@ -22,7 +23,15 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
-        <body className={roboto.className}>{children}</body>
+        <body className={roboto.className}>
+          <ThemeProvider
+            attribute="class"
+            forcedTheme="dark"
+            storageKey="stream-sphere-theme"
+          >
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
