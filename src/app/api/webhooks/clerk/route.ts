@@ -2,6 +2,7 @@ import { WebhookEvent } from '@clerk/nextjs/server';
 import { headers } from 'next/headers';
 import { Webhook } from 'svix';
 
+// Cannot be a default export in an api route
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
