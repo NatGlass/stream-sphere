@@ -1,3 +1,4 @@
+import prisma from '@/lib/db';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import { headers } from 'next/headers';
 import { Webhook } from 'svix';
@@ -43,11 +44,48 @@ export async function POST(req: Request) {
   }
 
   // Get the ID and type of the event
-  const { id } = evt.data;
   const eventType = evt.type;
 
-  console.log(`Webhook received with an ID of ${id} and type of ${eventType}`);
-  console.log('Webhook body', body);
+  // Update the db based on the event type
+  if (eventType === 'user.created') {
+    await prisma.user.create({
+      data: {
+        externalUserId: payload.data.id,
+        username: payload.data.username,
+        imageUrl: payload.data.image_url,
+      },
+    });
+  }
+
+  if (eventType === 'user.updated') {
+    const currentUser = await prisma.user.findUnique({
+      where: {
+        externalUserId: payload.data.id,
+      },
+    });
+
+    if (!currentUser) {
+      return new Response("User doesn't exist", { status: 404 });
+    }
+
+    await prisma.user.update({
+      where: {
+        externalUserId: payload.data.id,
+      },
+      data: {
+        username: payload.data.username,
+        imageUrl: payload.data.image_url,
+      },
+    });
+  }
+
+  if (eventType === 'user.deleted') {
+    await prisma.user.delete({
+      where: {
+        externalUserId: payload.data.id,
+      },
+    });
+  }
 
   return new Response('', { status: 200 });
 }
