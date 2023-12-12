@@ -1,9 +1,9 @@
-import { Button } from '@/components/atoms/button';
+import { UserButton } from '@clerk/nextjs';
 
-function Home() {
+export default function Home() {
   return (
-    <Button>Only authenticated users can click this very long button.</Button>
+    <div>
+      <UserButton afterSignOutUrl="/" />
+    </div>
   );
 }
-
-export default Home;
