@@ -11,4 +11,3 @@ function BrowseLayout({ children }: PropsWithChildren) {
 }
 
 export default BrowseLayout;
- 
