@@ -1,4 +1,4 @@
-import Container from '@/components/molecules/container';
+import Container from '@/components/molecules/sidebar-container';
 import Navbar from '@/components/organisms/navbar';
 import Sidebar from '@/components/organisms/sidebar';
 import { PropsWithChildren } from 'react';
