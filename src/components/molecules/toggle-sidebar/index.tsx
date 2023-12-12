@@ -22,7 +22,7 @@ function ToggleSidebar() {
       )}
       {!collapsed && (
         <div className="flex items-center w-full p-3 pl-6">
-          <p className="font-semibold">Recommended</p>
+          <p className="font-semibold">For you</p>
           <Hint label={label} side="right" asChild>
             <Button
               className="h-auto p-2 ml-auto"
