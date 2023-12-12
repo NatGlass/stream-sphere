@@ -1,7 +1,9 @@
 import { Button } from '@/components/atoms/button';
 
 function Home() {
-  return <Button>I am a button.</Button>;
+  return (
+    <Button>Only authenticated users can click this very long button.</Button>
+  );
 }
 
 export default Home;
