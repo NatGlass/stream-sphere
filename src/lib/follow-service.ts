@@ -36,10 +36,12 @@ export async function isFollower(id: string) {
       throw new Error('Cannot follow yourself');
     }
 
-    const existingFollow = await prisma.follow.findFirst({
+    const existingFollow = await prisma.follow.findUnique({
       where: {
-        followerId: currentUser.id,
-        followingId: otherUser.id,
+        followerId_followingId: {
+          followerId: currentUser.id,
+          followingId: otherUser.id,
+        },
       },
     });
 
