@@ -34,6 +34,16 @@ async function getRecommended() {
               },
             },
           },
+          {
+            // Don't recommend users who are blocked
+            NOT: {
+              blocking: {
+                some: {
+                  blockedId: userId,
+                },
+              },
+            },
+          }
         ],
       },
       orderBy: {

@@ -1,21 +1,25 @@
-import { blockUser } from '@/lib/block-service';
+'use server';
+
+import { blockUser, unblockUser } from '@/lib/block-service';
 import { revalidatePath } from 'next/cache';
 
 export async function onBlock(id: string) {
   const blockedUser = await blockUser(id);
 
+  revalidatePath('/');
+
   if (blockedUser) {
-    revalidatePath(`/${blockedUser.blocked.id}`);
+    revalidatePath(`/${blockedUser.blocked.username}`);
   }
 
   return blockedUser;
 }
 
 export async function onUnblock(id: string) {
-  const unblockedUser = await blockUser(id);
+  const unblockedUser = await unblockUser(id);
 
   if (unblockedUser) {
-    revalidatePath(`/${unblockedUser.blocked.id}`);
+    revalidatePath(`/${unblockedUser.blocked.username}`);
   }
 
   return unblockedUser;

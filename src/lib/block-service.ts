@@ -1,25 +1,23 @@
 import getUser from './auth-service';
 import prisma from './db';
 
-export async function isBlockedByUser(id: string) {
+export const isBlockedByUser = async (id: string) => {
   try {
     const currentUser = await getUser();
 
     const otherUser = await prisma.user.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
     });
 
     if (!otherUser) {
       throw new Error('User not found');
     }
 
-    if (currentUser.id === otherUser.id) {
-      throw new Error('You cannot block yourself');
+    if (otherUser.id === currentUser.id) {
+      return false;
     }
 
-    const isBlocked = await prisma.block.findUnique({
+    const existingBlock = await prisma.block.findUnique({
       where: {
         blockerId_blockedId: {
           blockerId: otherUser.id,
@@ -28,17 +26,17 @@ export async function isBlockedByUser(id: string) {
       },
     });
 
-    return !!isBlocked;
-  } catch (error) {
+    return !!existingBlock;
+  } catch {
     return false;
   }
-}
+};
 
-export async function blockUser(id: string) {
+export const blockUser = async (id: string) => {
   const currentUser = await getUser();
 
   if (currentUser.id === id) {
-    throw new Error('You cannot block yourself');
+    throw new Error('Cannot block yourself');
   }
 
   const otherUser = await prisma.user.findUnique({
@@ -59,7 +57,7 @@ export async function blockUser(id: string) {
   });
 
   if (existingBlock) {
-    throw new Error('You have already blocked this user');
+    throw new Error('Already blocked');
   }
 
   const block = await prisma.block.create({
@@ -68,19 +66,18 @@ export async function blockUser(id: string) {
       blockedId: otherUser.id,
     },
     include: {
-      // Allows us to return the users username that was blocked on the client
       blocked: true,
     },
   });
 
   return block;
-}
+};
 
-export async function unblockUser(id: string) {
+export const unblockUser = async (id: string) => {
   const currentUser = await getUser();
 
   if (currentUser.id === id) {
-    throw new Error('You cannot unblock yourself');
+    throw new Error('Cannot unblock yourself');
   }
 
   const otherUser = await prisma.user.findUnique({
@@ -101,7 +98,7 @@ export async function unblockUser(id: string) {
   });
 
   if (!existingBlock) {
-    throw new Error('You have not blocked this user');
+    throw new Error('Not blocked');
   }
 
   const unblock = await prisma.block.delete({
@@ -114,4 +111,4 @@ export async function unblockUser(id: string) {
   });
 
   return unblock;
-}
+};
