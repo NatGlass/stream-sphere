@@ -25,7 +25,7 @@ async function UserPage({ params }: TUserPage) {
       name: {params.username}
       following: {`${isFollowing}`}
       <p>blocked status: {`${isBlocked}`}</p>
-      <UserActions userId={user.id} isFollowing={isFollowing} isBlocked={isBlocked} />
+      <UserActions userId={user.id} isFollowing={isFollowing} />
     </div>
   );
 }

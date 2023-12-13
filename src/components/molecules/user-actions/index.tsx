@@ -9,10 +9,9 @@ import { toast } from 'sonner';
 type TAction = {
   isFollowing: boolean;
   userId: string;
-  isBlocked: boolean;
 };
 
-function UserActions({ userId, isFollowing, isBlocked }: TAction) {
+function UserActions({ userId, isFollowing }: TAction) {
   const [isPending, startTransition] = useTransition();
 
   const handleFollow = () => {
