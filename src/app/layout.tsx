@@ -3,6 +3,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import { Toaster } from 'sonner';
 import './globals.css';
 
 const roboto = Roboto({
@@ -29,6 +30,7 @@ export default function RootLayout({
             forcedTheme="dark"
             storageKey="stream-sphere-theme"
           >
+            <Toaster theme="dark" position="top-right" />
             {children}
           </ThemeProvider>
         </body>
