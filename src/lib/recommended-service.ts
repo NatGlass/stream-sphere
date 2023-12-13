@@ -17,10 +17,24 @@ async function getRecommended() {
     // Logged in user
     users = await prisma.user.findMany({
       where: {
-        // Exclude the current user in the results
-        NOT: {
-          id: userId,
-        },
+        AND: [
+          {
+            // Exclude the current user in the results
+            NOT: {
+              id: userId,
+            },
+          },
+          {
+            // Don't recommend users who are already followed
+            NOT: {
+              followedBy: {
+                some: {
+                  followerId: userId,
+                },
+              },
+            },
+          },
+        ],
       },
       orderBy: {
         createdAt: 'desc',

@@ -1,7 +1,26 @@
 import getUser from './auth-service';
 import prisma from './db';
 
-export default async function isFollower(id: string) {
+export async function getFollowedUsers() {
+  try {
+    const currentUser = await getUser();
+
+    const followedUsers = await prisma.follow.findMany({
+      where: {
+        followerId: currentUser.id,
+      },
+      include: {
+        following: true,
+      },
+    });
+
+    return followedUsers;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function isFollower(id: string) {
   try {
     const currentUser = await getUser();
 
