@@ -1,4 +1,4 @@
-import Recommended from '@/components/molecules/sidebar-recommended';
+import Recommended, { RecommendedSkeleton } from '@/components/molecules/sidebar-recommended';
 import Wrapper from '@/components/molecules/sidebar-wrapper';
 import ToggleSidebar from '@/components/molecules/toggle-sidebar';
 import getRecommended from '@/lib/recommended-service';
@@ -16,3 +16,11 @@ async function Sidebar() {
 }
 
 export default Sidebar;
+
+export function SidebarSkeleton() {
+  return (
+    <aside className='fixed left-0 flex flex-col w-[70px] lg:w-60 h-full bg-slate-900 z-50'>
+      <RecommendedSkeleton />
+    </aside>
+  )
+}

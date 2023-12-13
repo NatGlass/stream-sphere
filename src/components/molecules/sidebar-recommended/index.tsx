@@ -2,7 +2,7 @@
 
 import useSidebar from '@/context/useSidebar';
 import { User } from '@prisma/client';
-import UserItem from '../user-item';
+import UserItem, { UserItemSkeleton } from '../user-item';
 
 type TRecommended = {
   data: User[];
@@ -35,3 +35,15 @@ function Recommended({ data }: TRecommended) {
 }
 
 export default Recommended;
+
+export function RecommendedSkeleton() {
+  return (
+    <ul className="px-2">
+      {[...Array(3)].map((_, i) => (
+        // Nothing unique with the items in this array, so we can use the index as the key
+        // eslint-disable-next-line react/no-array-index-key
+        <UserItemSkeleton key={i} />
+      ))}
+    </ul>
+  );
+}
