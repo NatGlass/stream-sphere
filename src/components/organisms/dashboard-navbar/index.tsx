@@ -1,5 +1,5 @@
 import Logo from '@/components/molecules/logo';
-import DashboardActions from '@/components/molecules/dashboard-navbar-actions';
+import DashboardActions from '@/components/molecules/dashboard/dashboard-navbar-actions';
 
 function DashboardNavbar() {
   return (

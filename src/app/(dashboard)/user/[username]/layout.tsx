@@ -1,4 +1,4 @@
-import DashboardSidebarContainer from '@/components/molecules/dashboard-sidebar-container';
+import DashboardSidebarContainer from '@/components/molecules/dashboard/dashboard-sidebar-container';
 import DashboardNavbar from '@/components/organisms/dashboard-navbar';
 import DashboardSidebar from '@/components/organisms/dashboard-sidebar';
 import { getSelfByUsername } from '@/lib/auth-service';

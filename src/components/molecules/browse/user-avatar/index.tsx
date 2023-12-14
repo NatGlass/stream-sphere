@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/atoms/avatar';
 import Skeleton from '@/components/atoms/skeleton';
 import cn from '@/lib/utils';
 import { VariantProps, cva } from 'class-variance-authority';
-import LiveBadge from '../live-badge';
+import LiveBadge from '../../live-badge';
 import './user-avatar.css';
 
 const avatarSizes = cva('', {
@@ -48,7 +48,7 @@ function UserAvatar({
       </Avatar>
       {canShowBadge && (
         <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
-          <LiveBadge  />
+          <LiveBadge />
         </div>
       )}
     </div>

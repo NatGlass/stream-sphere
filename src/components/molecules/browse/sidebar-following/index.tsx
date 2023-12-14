@@ -25,7 +25,7 @@ function Following({ data }: TFollowing) {
           <UserItem
             key={following.following.id}
             username={following.following.username}
-                imageUrl={following.following.imageUrl}
+            imageUrl={following.following.imageUrl}
           />
         ))}
       </ul>

@@ -6,7 +6,7 @@ import useSidebar from '@/context/useSidebar';
 import cn from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import LiveBadge from '../live-badge';
+import LiveBadge from '../../live-badge';
 import UserAvatar from '../user-avatar';
 
 type TUserItem = {

@@ -1,9 +1,11 @@
-import Following, { FollowingSkeleton } from '@/components/molecules/sidebar-following';
+import Following, {
+  FollowingSkeleton,
+} from '@/components/molecules/browse/sidebar-following';
 import Recommended, {
   RecommendedSkeleton,
-} from '@/components/molecules/sidebar-recommended';
-import Wrapper from '@/components/molecules/sidebar-wrapper';
-import ToggleSidebar from '@/components/molecules/toggle-sidebar';
+} from '@/components/molecules/browse/sidebar-recommended';
+import Wrapper from '@/components/molecules/browse/sidebar-wrapper';
+import ToggleSidebar from '@/components/molecules/browse/toggle-sidebar';
 import { getFollowedUsers } from '@/lib/follow-service';
 import getRecommended from '@/lib/recommended-service';
 
