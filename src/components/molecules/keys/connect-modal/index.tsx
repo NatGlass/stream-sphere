@@ -35,7 +35,8 @@ function ConnectModal() {
 
   const onSubmit = () => {
     startTransition(() => {
-      createIngress(parseInt(ingressType, 10))
+      // eslint-disable-next-line radix
+      createIngress(parseInt(ingressType))
         .then(() => {
           toast.success('Ingress created');
           closeRef?.current?.click();
