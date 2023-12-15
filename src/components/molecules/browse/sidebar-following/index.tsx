@@ -1,11 +1,14 @@
 'use client';
 
 import useSidebar from '@/context/useSidebar';
-import { Follow, User } from '@prisma/client';
+import { Follow, Stream, User } from '@prisma/client';
 import UserItem, { UserItemSkeleton } from '../user-item';
 
 type TFollowing = {
-  data: (Follow & { following: User })[];
+  data: (Follow & {
+    following: User & {
+    stream: Stream | null;
+  } })[];
 };
 
 function Following({ data }: TFollowing) {
@@ -26,6 +29,7 @@ function Following({ data }: TFollowing) {
             key={following.following.id}
             username={following.following.username}
             imageUrl={following.following.imageUrl}
+            isLive={following.following.stream?.isLive}
           />
         ))}
       </ul>
