@@ -22,65 +22,78 @@ const roomService = new RoomServiceClient(
 const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL!);
 
 export async function resetIngress(hostIdentity: string) {
-  const ingresses = await ingressClient.listIngress({
-    roomName: hostIdentity,
-  });
+  try {
+    const ingresses = await ingressClient.listIngress({
+      roomName: hostIdentity,
+    });
 
-  const rooms = await roomService.listRooms([hostIdentity]);
+    const rooms = await roomService.listRooms([hostIdentity]);
 
-  const deleteRoomPromises = rooms.map((room) =>
-    roomService.deleteRoom(room.name)
-  );
+    const deleteRoomPromises = rooms.map((room) =>
+      roomService.deleteRoom(room.name)
+    );
 
-  await Promise.all(deleteRoomPromises);
+    await Promise.all(deleteRoomPromises);
 
-  const deleteIngressPromises = ingresses
-    .filter((ingress): ingress is {ingressId: string} => ingress.ingressId !== undefined)
-    .map((ingress) => ingressClient.deleteIngress(ingress.ingressId));
+    const deleteIngressPromises = ingresses
+      .filter(
+        (ingress): ingress is { ingressId: string } =>
+          ingress.ingressId !== undefined
+      )
+      .map((ingress) => ingressClient.deleteIngress(ingress.ingressId));
 
-  await Promise.all(deleteIngressPromises);
+    await Promise.all(deleteIngressPromises);
+  } catch (error) {
+    console.error('Error in resetIngress:', error);
+    throw error;
+  }
 }
 
 export default async function createIngress(ingressType: IngressInput) {
-  const currentUser = await getUser();
+  try {
+    const currentUser = await getUser();
 
-  const options: CreateIngressOptions = {
-    name: currentUser.username,
-    roomName: currentUser.id,
-    participantName: currentUser.username,
-    participantIdentity: currentUser.id,
-  };
-
-  if (ingressType === IngressInput.WHIP_INPUT) {
-    options.bypassTranscoding = true;
-  } else {
-    options.video = {
-      source: TrackSource.CAMERA,
-      preset: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
+    const options: CreateIngressOptions = {
+      name: currentUser.username,
+      roomName: currentUser.id,
+      participantName: currentUser.username,
+      participantIdentity: currentUser.id,
     };
-    options.audio = {
-      source: TrackSource.MICROPHONE,
-      preset: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
-    };
+
+    if (ingressType === IngressInput.WHIP_INPUT) {
+      options.bypassTranscoding = true;
+    } else {
+      options.video = {
+        source: TrackSource.CAMERA,
+        preset: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
+      };
+      options.audio = {
+        source: TrackSource.MICROPHONE,
+        preset: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
+      };
+    }
+
+    const ingress = await ingressClient.createIngress(ingressType, options);
+
+    if (!ingress || !ingress.url || !ingress.streamKey) {
+      throw new Error('failed to create ingress');
+    }
+
+    await prisma.stream.update({
+      where: {
+        userId: currentUser.id,
+      },
+      data: {
+        ingressId: ingress.ingressId,
+        serverUrl: ingress.url,
+        streamKey: ingress.streamKey,
+      },
+    });
+
+    revalidatePath(`/user/${currentUser.username}/keys`);
+    return ingress;
+  } catch (error) {
+    console.error('Error in createIngress:', error);
+    throw error;
   }
-
-  const ingress = await ingressClient.createIngress(ingressType, options);
-
-  if (!ingress || !ingress.url || !ingress.streamKey) {
-    throw new Error('failed to create ingress');
-  }
-
-  await prisma.stream.update({
-    where: {
-      userId: currentUser.id,
-    },
-    data: {
-      ingressId: ingress.ingressId,
-      serverUrl: ingress.url,
-      streamKey: ingress.streamKey,
-    },
-  });
-
-  revalidatePath(`/users/${currentUser.username}/keys`);
-  return ingress;
 }
