@@ -1,12 +1,12 @@
 'use client';
 
 import useSidebar from '@/context/useSidebar';
-import { Stream, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import UserItem, { UserItemSkeleton } from '../user-item';
 
 type TRecommended = {
   data: (User & {
-    stream: Stream | null;
+    stream: { isLive: boolean } | null;
   })[];
 };
 
