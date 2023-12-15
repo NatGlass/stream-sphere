@@ -24,7 +24,7 @@ async function ChatPage() {
         />
         <ToggleCard
           field="isChatDelayed"
-          label="Delay chat (15 seconds)"
+          label="Delay chat (5 seconds)"
           value={stream.isChatDelayed}
         />
         <ToggleCard
