@@ -46,6 +46,9 @@ async function getRecommended() {
           }
         ],
       },
+      include: {
+        stream: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
@@ -53,6 +56,9 @@ async function getRecommended() {
   } else {
     // Public user
     users = await prisma.user.findMany({
+      include: {
+        stream: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
