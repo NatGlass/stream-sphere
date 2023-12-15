@@ -1,5 +1,5 @@
 import StreamPlayer from '@/components/organisms/stream-player';
-import { getUserByUsername } from '@/lib/user-service';
+import  getUserByUsername  from '@/lib/user-service';
 import { currentUser } from '@clerk/nextjs';
 
 type TUserDashboard = {
