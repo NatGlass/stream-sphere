@@ -22,9 +22,10 @@ function CommunityItem({
   participantIdentity,
 }: TCommunityItem) {
   const [isPending, startTransition] = useTransition();
+
   const color = stringToColor(participantName || '');
-  const isSelf = participantIdentity === viewerName;
-  const isHost = participantIdentity === hostName;
+  const isSelf = participantName === viewerName;
+  const isHost = viewerName === hostName;
 
   const handleBlock = () => {
     if (!participantName || isSelf || !isHost) return;
@@ -32,7 +33,7 @@ function CommunityItem({
     startTransition(() => {
       onBlock(participantIdentity)
         .then(() => toast.success(`Blocked ${participantName}`))
-        .catch(() => toast.error(`Failed to block ${participantName}`));
+        .catch(() => toast.error('Something went wrong'));
     });
   };
 
@@ -40,7 +41,7 @@ function CommunityItem({
     <div
       className={cn(
         'group flex items-center justify-between w-full p-2 rounded-md text-sm hover:bg-white/5',
-        isPending && 'opacity-50 cursor-events-none'
+        isPending && 'opacity-50 pointer-events-none'
       )}
     >
       <p style={{ color }}>{participantName}</p>
@@ -50,9 +51,9 @@ function CommunityItem({
             variant="ghost"
             disabled={isPending}
             onClick={handleBlock}
-            className="w-auto h-auto p-1 opacity-0 group-hover:opacity-100 transition"
+            className="h-auto w-auto p-1 opacity-0 group-hover:opacity-100 transition"
           >
-            <MinusCircle className="w-4 h-4 text-muted-foreground" />
+            <MinusCircle className="h-4 w-4 text-muted-foreground" />
           </Button>
         </Hint>
       )}

@@ -1,4 +1,4 @@
-import UserActions from '@/components/molecules/user-actions';
+import StreamPlayer from '@/components/organisms/stream-player';
 import { isBlockedByUser } from '@/lib/block-service';
 import { isFollower } from '@/lib/follow-service';
 import getUserByUsername from '@/lib/user-service';
@@ -13,20 +13,19 @@ type TUserPage = {
 async function UserPage({ params }: TUserPage) {
   const user = await getUserByUsername(params.username);
 
-  if (!user) {
+  if (!user || !user.stream) {
     notFound();
   }
 
   const isFollowing = await isFollower(user.id);
   const isBlocked = await isBlockedByUser(user.id);
 
+  if (isBlocked) { 
+    notFound();
+  }
+
   return (
-    <div className="flex flex-col gap-y-4">
-      name: {params.username}
-      following: {`${isFollowing}`}
-      <p>blocked status: {`${isBlocked}`}</p>
-      <UserActions userId={user.id} isFollowing={isFollowing} />
-    </div>
+    <StreamPlayer user={user} stream={user.stream} isFollowing={isFollowing} />
   );
 }
 

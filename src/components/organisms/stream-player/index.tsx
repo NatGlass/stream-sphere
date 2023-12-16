@@ -1,6 +1,7 @@
 'use client';
 
 import ChatToggle from '@/components/molecules/chat/chat-toggle';
+import AboutCard from '@/components/molecules/stream/about-card';
 import InfoCard from '@/components/molecules/stream/info-card';
 import Video, { VideoSkeleton } from '@/components/molecules/stream/video';
 import VideoHeader, {
@@ -11,11 +12,10 @@ import useViewerToken from '@/hooks/useViewerToken';
 import cn from '@/lib/utils';
 import { LiveKitRoom } from '@livekit/components-react';
 import { Stream, User } from '@prisma/client';
-import AboutCard from '@/components/molecules/stream/about-card';
 import Chat, { ChatSkeleton } from '../chat';
 
 type TStreamPlayer = {
-  user: User & { stream: Stream | null, _count: {followedBy: number} };
+  user: User & { stream: Stream | null; _count: { followedBy: number } };
   stream: Stream;
   isFollowing: boolean;
 };
@@ -64,7 +64,8 @@ function StreamPlayer({ user, stream, isFollowing }: TStreamPlayer) {
             hostIdentity={user.id}
             viewerIdentity={identity}
             bio={user.bio}
-            followedByCount={0}
+            // eslint-disable-next-line no-underscore-dangle
+            followedByCount={user._count.followedBy}
           />
         </div>
         <div className={cn('col-span-1', collapsed && 'hidden')}>
