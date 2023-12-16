@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/atoms/dialog';
 import { Input } from '@/components/atoms/input';
-import { Label } from '@/components/atoms/label';
+import Label  from '@/components/atoms/label';
 import { useRouter } from 'next/navigation';
 import { ElementRef, useRef, useState, useTransition } from 'react';
 import { toast } from 'sonner';
