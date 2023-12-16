@@ -1,7 +1,11 @@
 'use client';
 
 import ChatToggle from '@/components/molecules/chat/chat-toggle';
+import InfoCard from '@/components/molecules/stream/info-card';
 import Video, { VideoSkeleton } from '@/components/molecules/stream/video';
+import VideoHeader, {
+  VideoHeaderSkeleton,
+} from '@/components/molecules/stream/video-header';
 import useChatSidebar from '@/context/useChatSidebar';
 import useViewerToken from '@/hooks/useViewerToken';
 import cn from '@/lib/utils';
@@ -40,6 +44,20 @@ function StreamPlayer({ user, stream, isFollowing }: TStreamPlayer) {
       >
         <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
           <Video hostname={user.username} hostIdentity={user.id} />
+          <VideoHeader
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            imageUrl={user.imageUrl}
+            isFollowing={isFollowing}
+            name={stream.name}
+          />
+          <InfoCard
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            name={stream.name}
+            thumbnailUrl={stream.thumbnailUrl}
+          />
         </div>
         <div className={cn('col-span-1', collapsed && 'hidden')}>
           <Chat
@@ -64,6 +82,7 @@ export function StreamPlayerSkeleton() {
     <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
       <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
         <VideoSkeleton />
+        <VideoHeaderSkeleton />
       </div>
       <div className="col-span-1 bg-background">
         <ChatSkeleton />
