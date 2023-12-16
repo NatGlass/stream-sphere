@@ -11,10 +11,11 @@ import useViewerToken from '@/hooks/useViewerToken';
 import cn from '@/lib/utils';
 import { LiveKitRoom } from '@livekit/components-react';
 import { Stream, User } from '@prisma/client';
+import AboutCard from '@/components/molecules/stream/about-card';
 import Chat, { ChatSkeleton } from '../chat';
 
 type TStreamPlayer = {
-  user: User & { stream: Stream | null };
+  user: User & { stream: Stream | null, _count: {followedBy: number} };
   stream: Stream;
   isFollowing: boolean;
 };
@@ -57,6 +58,13 @@ function StreamPlayer({ user, stream, isFollowing }: TStreamPlayer) {
             viewerIdentity={identity}
             name={stream.name}
             thumbnailUrl={stream.thumbnailUrl}
+          />
+          <AboutCard
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            bio={user.bio}
+            followedByCount={0}
           />
         </div>
         <div className={cn('col-span-1', collapsed && 'hidden')}>
