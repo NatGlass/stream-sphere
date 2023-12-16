@@ -1,8 +1,9 @@
 'use client';
 
-import ChatForm from '@/components/molecules/chat/chat-form';
-import ChatHeader from '@/components/molecules/chat/chat-header';
-import ChatList from '@/components/molecules/chat/chat-list';
+import ChatCommunity from '@/components/molecules/chat/chat-community';
+import ChatForm, { ChatFormSkeleton } from '@/components/molecules/chat/chat-form';
+import ChatHeader, { ChatHeaderSkeleton } from '@/components/molecules/chat/chat-header';
+import ChatList, { ChatListSkeleton } from '@/components/molecules/chat/chat-list';
 import useChatSidebar, { ChatVariant } from '@/context/useChatSidebar';
 import {
   useChat,
@@ -14,6 +15,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 
 type TChat = {
+  viewerName: string;
   hostName: string;
   hostIdentity: string;
   isFollowing: boolean;
@@ -23,6 +25,7 @@ type TChat = {
 };
 
 function Chat({
+  viewerName,
   hostName,
   hostIdentity,
   isFollowing,
@@ -82,9 +85,19 @@ function Chat({
         </>
       )}
 
-      {variant === ChatVariant.COMMUNITY && <p>Community</p>}
+      {variant === ChatVariant.COMMUNITY && <ChatCommunity hostName={hostName} viewerName={viewerName} isHidden={isHidden} />}
     </div>
   );
 }
 
 export default Chat;
+
+export function ChatSkeleton() {
+  return (
+    <div className='flex flex-col border-l border-b pt-0 h-[calc(100vh-80px)] border-2'>
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
+    </div>
+  )
+}

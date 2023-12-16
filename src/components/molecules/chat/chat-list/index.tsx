@@ -1,6 +1,7 @@
 "use client"
 
 import { ReceivedChatMessage } from "@livekit/components-react";
+import Skeleton from "@/components/atoms/skeleton";
 import ChatMessage from "../chat-message";
 
 type TChatList = {
@@ -24,3 +25,11 @@ function ChatList({ messages, isHidden }: TChatList) {
 }
 
 export default ChatList;
+
+export function ChatListSkeleton() {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <Skeleton className="w-1/2 h-6" />
+    </div>
+  )
+}

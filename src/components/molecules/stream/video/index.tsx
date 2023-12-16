@@ -1,5 +1,6 @@
 'use client';
 
+import Skeleton from '@/components/atoms/skeleton';
 import LiveVideo from '@/components/organisms/live-video';
 import {
   useConnectionState,
@@ -37,3 +38,11 @@ function Video({ hostname, hostIdentity }: TVideo) {
 }
 
 export default Video;
+
+export function VideoSkeleton() {
+  return (
+    <div className="aspect-video border-x border-background">
+      <Skeleton className="h-full w-full rounded-none" />
+    </div>
+  );
+}
