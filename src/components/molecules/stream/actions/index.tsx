@@ -4,7 +4,7 @@ import { onFollow, onUnfollow } from '@/actions/follow';
 import { Button } from '@/components/atoms/button';
 import Skeleton from '@/components/atoms/skeleton';
 import cn from '@/lib/utils';
-import { useAuth } from '@clerk/nextjs';
+import { useAuth } from '@/lib/auth';
 import { Heart } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { useTransition } from 'react';

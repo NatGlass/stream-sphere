@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
+import { useUser } from '@/lib/auth';
 import { Fullscreen, KeyRound, MessageSquare, Users } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import DashboardNavItem, {

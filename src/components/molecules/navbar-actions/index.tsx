@@ -1,5 +1,7 @@
 import { Button } from '@/components/atoms/button';
-import { SignInButton, UserButton, currentUser } from '@clerk/nextjs';
+import SignInButton from '@/components/auth/sign-in-button';
+import UserButton from '@/components/auth/user-button';
+import { currentUser } from '@/lib/auth';
 import { LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 
@@ -26,7 +28,7 @@ async function Actions() {
               <span className="hidden lg:block">Dashboard</span>
             </Link>
           </Button>
-          <UserButton afterSignOutUrl='/' />
+          <UserButton afterSignOutUrl="/" />
         </div>
       )}
     </div>
