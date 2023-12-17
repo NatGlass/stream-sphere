@@ -1,6 +1,4 @@
 import ThemeProvider from '@/components/theme/ThemeProvider';
-import { ClerkProvider } from '@clerk/nextjs';
-import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import { Toaster } from 'sonner';
@@ -22,19 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
-      <html lang="en">
-        <body className={roboto.className}>
-          <ThemeProvider
-            attribute="class"
-            forcedTheme="dark"
-            storageKey="stream-sphere-theme"
-          >
-            <Toaster theme="dark" position="top-right" />
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={roboto.className}>
+        <ThemeProvider
+          attribute="class"
+          forcedTheme="dark"
+          storageKey="stream-sphere-theme"
+        >
+          <Toaster theme="dark" position="top-right" />
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
