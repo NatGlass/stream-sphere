@@ -11,12 +11,32 @@ import useChatSidebar from '@/context/useChatSidebar';
 import useViewerToken from '@/hooks/useViewerToken';
 import cn from '@/lib/utils';
 import { LiveKitRoom } from '@livekit/components-react';
-import { Stream, User } from '@prisma/client';
 import Chat, { ChatSkeleton } from '../chat';
 
+type TStream = {
+  id: string;
+  isChatEnabled: boolean;
+  isChatDelayed: boolean;
+  isChatFollowersOnly: boolean;
+  name: string;
+  thumbnailUrl: string | null;
+  isLive: boolean;
+};
+
+type TUser = {
+  id: string;
+  username: string;
+  bio: string | null;
+  stream: TStream | null;
+  imageUrl: string;
+  _count: {
+    followedBy: number;
+  };
+};
+
 type TStreamPlayer = {
-  user: User & { stream: Stream | null; _count: { followedBy: number } };
-  stream: Stream;
+  user: TUser;
+  stream: TStream;
   isFollowing: boolean;
 };
 
