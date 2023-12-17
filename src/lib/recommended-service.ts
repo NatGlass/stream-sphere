@@ -53,9 +53,16 @@ async function getRecommended() {
           },
         },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: [
+        {
+          stream: {
+            isLive: 'desc',
+          },
+        },
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
   } else {
     // Public user
