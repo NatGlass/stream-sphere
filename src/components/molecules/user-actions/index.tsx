@@ -45,7 +45,7 @@ function UserActions({ userId, isFollowing }: TAction) {
   const handleBlock = () => {
     startTransition(() => {
       onBlock(userId)
-        .then((data) => toast.success(`You blocked ${data.blocked.username}`))
+        .then((data) => toast.success(`You blocked ${data?.blocked.username}`))
         .catch(() => toast.error("Couldn't block this user"));
     });
   };
