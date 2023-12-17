@@ -1,12 +1,19 @@
 import Skeleton from '@/components/atoms/skeleton';
-import { Stream, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 import Thumbnail, { ThumbnailSkeleton } from '../../thumbnail';
 import VerifiedMark from '../../verified-mark';
 
 type TSearchResultCard = {
-  data: Stream & { user: User };
+  data: {
+    id: string;
+    name: string;
+    thumbnailUrl: string | null;
+    isLive: boolean;
+    updatedAt: Date;
+    user: User;
+  };
 };
 
 function SearchResultCard({ data }: TSearchResultCard) {
