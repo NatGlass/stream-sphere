@@ -43,15 +43,15 @@ async function getRecommended() {
                 },
               },
             },
-          }
+          },
         ],
       },
       include: {
         stream: {
           select: {
             isLive: true,
-          }
-        }
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',
@@ -64,12 +64,19 @@ async function getRecommended() {
         stream: {
           select: {
             isLive: true,
-          }
-        }
+          },
+        },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: [
+        {
+          stream: {
+            isLive: 'desc',
+          },
+        },
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
   }
   return users;
