@@ -1,9 +1,11 @@
-import { SignInButton as ClerkSignInButton } from '@clerk/nextjs';
+import { Button } from '../atoms/button';
 
 function SignInButton({ children }: { children: any }) {
   return (
     <div>
-      <ClerkSignInButton>{children}</ClerkSignInButton>
+      <Button>
+        <div>{children}</div>
+      </Button>
     </div>
   );
 }

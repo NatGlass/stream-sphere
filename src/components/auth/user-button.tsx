@@ -1,12 +1,7 @@
-import {
-    UserButton as ClerkUserButton
-} from "@clerk/nextjs"
+import { Button } from '../atoms/button';
 
-
-function UserButton({props}: any) {
-  return (
-    <ClerkUserButton {...props} />
-  )
+function UserButton() {
+  return <Button>User button</Button>;
 }
 
-export default UserButton
+export default UserButton;

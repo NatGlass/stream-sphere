@@ -1,9 +1,5 @@
-import {
-    SignUp as ClerkSignUp
-} from "@clerk/nextjs"
-
 function SignUp() {
-  return <ClerkSignUp />;
+  return <div>Sign up page</div>;
 }
 
 export default SignUp;
