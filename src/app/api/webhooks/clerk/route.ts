@@ -1,3 +1,4 @@
+import { resetIngress } from '@/actions/ingress';
 import prisma from '@/lib/db';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import { headers } from 'next/headers';
@@ -85,6 +86,8 @@ export async function POST(req: Request) {
   }
 
   if (eventType === 'user.deleted') {
+    await resetIngress(payload.data.id);
+    
     await prisma.user.delete({
       where: {
         externalUserId: payload.data.id,
