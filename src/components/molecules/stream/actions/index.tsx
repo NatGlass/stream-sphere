@@ -18,7 +18,7 @@ type TActions = {
 
 function Actions({ hostIdentity, isFollowing, isHost }: TActions) {
   const [isPending, startTransition] = useTransition();
-  const { userId } = useAuth();
+  const user = useAuth();
 
   const handleFollow = () => {
     startTransition(() => {
@@ -42,7 +42,7 @@ function Actions({ hostIdentity, isFollowing, isHost }: TActions) {
 
   // eslint-disable-next-line consistent-return
   const handleFollowStatus = () => {
-    if (!userId) {
+    if (!user) {
       return redirect('/sign-in');
     }
 

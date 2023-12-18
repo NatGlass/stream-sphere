@@ -17,7 +17,7 @@ function DashboardActions() {
           Exit
         </Link>
       </Button>
-      <UserButton afterSignOutUrl="/" />
+      <UserButton />
     </div>
   );
 }

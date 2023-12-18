@@ -28,8 +28,8 @@ function Following({ data }: TFollowing) {
         {data.map((following) => (
           <UserItem
             key={following.following.id}
-            username={following.following.username}
-            imageUrl={following.following.imageUrl}
+            username={following.following.username!}
+            imageUrl={following.following.image!}
             isLive={following.following.stream?.isLive}
           />
         ))}

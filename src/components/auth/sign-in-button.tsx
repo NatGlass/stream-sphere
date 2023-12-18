@@ -1,12 +1,11 @@
+import Link from 'next/link';
 import { Button } from '../atoms/button';
 
-function SignInButton({ children }: { children: any }) {
+function SignInButton() {
   return (
-    <div>
-      <Button>
-        <div>{children}</div>
-      </Button>
-    </div>
+    <Link href="/sign-in">
+      <Button size="sm">Sign In</Button>
+    </Link>
   );
 }
 

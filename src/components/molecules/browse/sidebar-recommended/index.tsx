@@ -26,8 +26,8 @@ function Recommended({ data }: TRecommended) {
         {data.map((user) => (
           <UserItem
             key={user.id}
-            username={user.username}
-            imageUrl={user.imageUrl}
+            username={user.username!}
+            imageUrl={user.image!}
             isLive={user.stream?.isLive}
           />
         ))}

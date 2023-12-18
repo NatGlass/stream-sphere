@@ -11,7 +11,7 @@ type TUserPage = {
 };
 
 async function UserPage({ params }: TUserPage) {
-  const user = await getUserByUsername(params.username);
+const user = await getUserByUsername(params.username);
 
   if (!user || !user.stream) {
     notFound();

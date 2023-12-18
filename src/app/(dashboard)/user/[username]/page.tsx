@@ -9,11 +9,11 @@ type TUserDashboard = {
 };
 
 async function UserDashboard({ params }: TUserDashboard) {
-  const clerkUser = await currentUser();
+  const loggedInUser = await currentUser();
   const user = await getUserByUsername(params.username);
 
-  if (!user || user.externalUserId !== clerkUser?.id || !user.stream) {
-    throw new Error('Unauthorized');
+  if (!user || !user.stream || loggedInUser?.id !== user.id) {
+    throw new Error('Unauthorised');
   }
 
   return (

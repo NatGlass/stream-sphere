@@ -1,11 +1,19 @@
+import { auth } from '@/../next-auth';
+import { useSession as useNextAuthSession } from 'next-auth/react';
+
 export function useAuth() {
-  return null;
+  const session = useNextAuthSession();
+
+  return session.data?.user;
 }
 
 export function useUser() {
-  return null;
+  const session = useNextAuthSession();
+
+  return session.data?.user;
 }
 
 export async function currentUser() {
-  return null;
+  const session = await auth();
+  return session?.user;
 }

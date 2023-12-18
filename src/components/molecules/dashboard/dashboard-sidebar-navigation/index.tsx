@@ -9,7 +9,7 @@ import DashboardNavItem, {
 
 function DashboardSidebarNavigation() {
   const pathname = usePathname();
-  const { user } = useUser();
+  const  user  = useUser();
 
   const routes = [
     {

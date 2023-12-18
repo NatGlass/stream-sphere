@@ -36,7 +36,7 @@ async function createViewerToken(hostIdentity: string) {
       process.env.LIVEKIT_API_SECRET!,
     {
         identity: isHost ? `host-${self.id}` : self.id,
-        name: self.username,
+        name: self.username!,
     },
     );
     

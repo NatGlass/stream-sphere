@@ -2,15 +2,15 @@ import { currentUser } from '@/lib/auth';
 import prisma from './db';
 
 async function getUser() {
-  const getCurrentUser = await currentUser();
+  const self = await currentUser();
 
-  if (!getCurrentUser || !getCurrentUser.username) {
+  if (!self || !self.username) {
     throw new Error('Unauthorised');
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      externalUserId: getCurrentUser.id,
+      id: self.id,
     },
   });
 
