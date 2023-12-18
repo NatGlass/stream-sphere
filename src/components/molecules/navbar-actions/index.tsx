@@ -1,17 +1,16 @@
 import { Button } from '@/components/atoms/button';
-import { SignInButton, UserButton, currentUser } from '@clerk/nextjs';
+import SignInButton from '@/components/auth/sign-in-button';
+import UserButton from '@/components/auth/user-button';
+import { currentUser } from '@/lib/auth';
 import { LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 
 async function Actions() {
   const user = await currentUser();
+
   return (
     <div className="flex items-center justify-end ml-4 gap-x-2 lg:ml-0">
-      {!user && (
-        <SignInButton>
-          <Button>Login</Button>
-        </SignInButton>
-      )}
+      {!user && <SignInButton />}
       {!!user && (
         <div className="flex items-center gap-x-4">
           <Button
@@ -26,7 +25,7 @@ async function Actions() {
               <span className="hidden lg:block">Dashboard</span>
             </Link>
           </Button>
-          <UserButton afterSignOutUrl='/' />
+          <UserButton />
         </div>
       )}
     </div>

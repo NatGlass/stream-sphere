@@ -24,7 +24,7 @@ const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL!);
 export async function resetIngress(hostIdentity: string) {
   try {
     const ingresses = await ingressClient.listIngress({
-      roomName: hostIdentity,
+      // roomName: hostIdentity,
     });
 
     const rooms = await roomService.listRooms([hostIdentity]);
@@ -54,9 +54,9 @@ export default async function createIngress(ingressType: IngressInput) {
     const currentUser = await getUser();
 
     const options: CreateIngressOptions = {
-      name: currentUser.username,
+      name: currentUser.username!,
       roomName: currentUser.id,
-      participantName: currentUser.username,
+      participantName: currentUser.username!,
       participantIdentity: currentUser.id,
     };
 

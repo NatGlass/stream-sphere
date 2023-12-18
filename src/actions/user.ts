@@ -12,7 +12,13 @@ export async function updateUser(values: Partial<User>) {
 
     const validData = {
       bio: values.bio,
+      username: values.username,
+      image: values.image,
     };
+
+    if (validData.username === '' || validData.username === null) {
+      throw new Error('Username cannot be empty');
+    }
 
     const updatedUser = await prisma.user.update({
       where: {

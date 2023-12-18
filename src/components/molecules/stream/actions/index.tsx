@@ -4,7 +4,7 @@ import { onFollow, onUnfollow } from '@/actions/follow';
 import { Button } from '@/components/atoms/button';
 import Skeleton from '@/components/atoms/skeleton';
 import cn from '@/lib/utils';
-import { useAuth } from '@clerk/nextjs';
+import { useAuth } from '@/lib/auth';
 import { Heart } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { useTransition } from 'react';
@@ -18,7 +18,7 @@ type TActions = {
 
 function Actions({ hostIdentity, isFollowing, isHost }: TActions) {
   const [isPending, startTransition] = useTransition();
-  const { userId } = useAuth();
+  const user = useAuth();
 
   const handleFollow = () => {
     startTransition(() => {
@@ -42,7 +42,7 @@ function Actions({ hostIdentity, isFollowing, isHost }: TActions) {
 
   // eslint-disable-next-line consistent-return
   const handleFollowStatus = () => {
-    if (!userId) {
+    if (!user) {
       return redirect('/sign-in');
     }
 

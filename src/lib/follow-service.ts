@@ -22,12 +22,24 @@ export async function getFollowedUsers() {
           include: {
             stream: {
               select: {
-                isLive: true
-              }
-            }
-          }
-        }
+                isLive: true,
+              },
+            },
+          },
+        },
       },
+      orderBy: [
+        {
+          following: {
+            stream: {
+              isLive: 'desc',
+            },
+          },
+        },
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
 
     return followedUsers;

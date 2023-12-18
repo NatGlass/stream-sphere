@@ -5,6 +5,23 @@ import { createUploadthing, type FileRouter } from 'uploadthing/next';
 const f = createUploadthing();
 
 export const ourFileRouter = {
+  imageUploader: f({
+    image: {
+      maxFileSize: '4MB',
+      maxFileCount: 1,
+    },
+  })
+    .middleware(async () => {
+      const user = await getUser();
+      return { user };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      await prisma.user.update({
+        where: { id: metadata.user.id },
+        data: { image: file.url },
+      });
+    }),
+
   thumbnailUploader: f({ image: { maxFileSize: '4MB', maxFileCount: 1 } })
     .middleware(async () => {
       const user = await getUser();
